@@ -24,12 +24,13 @@ jobs:
       - name: "Generate CI"
         id: generate-matrix
         run: |
-          echo "repos<<EOF" >> $GITHUB_OUTPUT
-          cat  ${{ env.CONFIGURATION }} >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "repos<<EOF" >> $GITHUB_ENV
+          cat  ${{ env.CONFIGURATION }} >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: "Set builddate"
         id: generate-builddate
-        run: echo "builddate=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+        run: echo "builddate=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
   Build-Kernel:
     name: "Build kernel"

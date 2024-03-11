@@ -24,9 +24,7 @@ jobs:
       - name: "Generate CI"
         id: generate-matrix
         run: |
-          echo "repos<<EOF" >> $GITHUB_ENV
-          cat  ${{ env.CONFIGURATION }} >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "repos=$(cat ${{ env.CONFIGURATION }})" >> $GITHUB_ENV
 
       - name: "Set builddate"
         id: generate-builddate
@@ -44,16 +42,12 @@ jobs:
         repos: ${{ fromJSON(needs.Set-repos.outputs.repos) }}
     env:
       WORKSPACE: ${{ github.workspace }}
-
       builddate: "${{ needs.Set-repos.outputs.builddate }}"
-
       KERNEL_NAME: ${{ matrix.repos.kernelSource.name }}
       KERNEL_REPO: ${{ matrix.repos.kernelSource.repo }}
       KERNEL_BRANCH: ${{ matrix.repos.kernelSource.branch }}
       KERNEL_DEVICE: ${{ matrix.repos.kernelSource.device }}
-
       DEFCONFIG_NAME: ${{ matrix.repos.kernelSource.defconfig }}
-
       withKernelSU: ${{ matrix.repos.withKernelSU }}
       ccache: ${{ matrix.repos.ccache }}
       useAnykernel: ${{ matrix.repos.AnyKernel3.use }}

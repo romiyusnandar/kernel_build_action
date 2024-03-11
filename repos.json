@@ -7,6 +7,7 @@
         "device": "tissot",
         "defconfig": "tissot_defconfig"
     },
+      "withKernelSU": false,
       "toolchains": [
         {
           "repo": "https://github.com/kdrag0n/proton-clang",
@@ -15,13 +16,13 @@
           "binPath": ["bin"]
         }
       ],
+      "ccache": true,
       "params": {
-        "ARCH": "arm64",
+       "ARCH": "arm64",
         "CC": "proton-clang/bin/clang",
         "externalCommand": {
           "CROSS_COMPILE": "proton-clang/bin/aarch64-linux-gnu-",
           "CROSS_COMPILE_ARM32": "proton-clang/bin/arm-linux-gnueabi-",
-          "LD": "proton-clang/bin/ld.lld",
           "AR": "proton-clang/bin/llvm-ar",
           "NM": "proton-clang/bin/llvm-nm",
           "OBJCOPY": "proton-clang/bin/llvm-objcopy",
@@ -29,7 +30,6 @@
           "READELF": "proton-clang/bin/llvm-readelf",
           "OBJSIZE": "proton-clang/bin/llvm-size",
           "STRIP": "proton-clang/bin/llvm-strip",
-          "LDGOLD": "proton-clang/bin/aarch64-linux-gnu-ld.gold",
           "LLVM_AR": "proton-clang/bin/llvm-ar",
           "LLVM_DIS": "proton-clang/bin/llvm-dis"
         }

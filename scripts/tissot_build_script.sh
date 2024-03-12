@@ -4,7 +4,7 @@
 clang() {
     echo "Cloning clang"
     if [ ! -d "clang" ]; then
-        git clone https://github.com/kdrag0n/proton-clang clang
+        git clone https://github.com/kdrag0n/proton-clang clang --depth=1
         KBUILD_COMPILER_STRING="Proton clang 13.0 x sirnewbies"
         PATH="${PWD}/clang/bin:${PATH}"
     fi

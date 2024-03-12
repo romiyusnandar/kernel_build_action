@@ -12,6 +12,12 @@ on:
       branch:
           description: 'Kernel source branch'
           required: true
+      token:
+          description: 'Telegram bot token'
+          required: true
+      chat_id:
+          description: 'Telegram chat id'
+          required: true
 
 
 env:
@@ -46,5 +52,5 @@ jobs:
           cd kernel
           if [ "${DEVICE}" = "tissot" ]; then
             wget https://raw.githubusercontent.com/sirnewbies/kernel_build_action/main/scripts/tissot_build_script.sh
-            bash C3_build_script.sh
+            bash tissot_build_script.sh
           fi

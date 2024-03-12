@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       device:
-          description: 'device codename (topaz)'
+          description: 'device codename (e.g topaz/tissot)'
           required: true
       repo:
-          description: 'Kernel source link'
+          description: 'Kernel source link (don't include . git at the end)'
           required: true
       branch:
           description: 'Kernel source branch'

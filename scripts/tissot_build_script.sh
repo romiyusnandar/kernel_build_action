@@ -74,7 +74,7 @@ error_sticker() {
 # Send Build Info
 sendinfo() {
     tg "
-• neOliT CI Build •
+• sirCompiler Action •
 *Building on*: \`Github actions\`
 *Date*: \`${DATE}\`
 *Device*: \`${DEVICE} (${CODENAME})\`
@@ -116,7 +116,8 @@ compile() {
         ARCH=$ARCH \
         CC="clang" \
         LLVM=1 \
-        CONFIG_NO_ERROR_ON_MISMATCH=y
+        CROSS_COMPILE=aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
     if ! [ -a "$IMAGE" ]; then
         finderr

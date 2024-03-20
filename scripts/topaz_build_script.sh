@@ -70,6 +70,7 @@ sendinfo() {
 }
 
 sync() {
+    cd $WORK_DIR
     echo "Syncing manifest"
     repo init -u https://github.com/sirnewbies/kernel_manifest.git -b main
     repo sync

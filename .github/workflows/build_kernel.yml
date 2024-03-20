@@ -48,8 +48,6 @@ jobs:
 
       - name: Compiling
         run: |
-          git clone $REPO -b $BRANCH kernel 
-          cd kernel
           if [ "${DEVICE}" = "tissot" ]; then
             wget https://raw.githubusercontent.com/sirnewbies/kernel_build_action/main/scripts/tissot_build_script.sh
             bash tissot_build_script.sh

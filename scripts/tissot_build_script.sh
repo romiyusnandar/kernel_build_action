@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 # Dependencies
+git clone $REPO -b $BRANCH kernel 
+cd kernel
+
 clang() {
     echo "Cloning clang"
     if [ ! -d "clang" ]; then

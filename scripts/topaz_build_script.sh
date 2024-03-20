@@ -9,14 +9,6 @@ init() {
     chmod a+x ~/bin/repo
 }
 
-sync() {
-    echo "Syncing manifest"
-    repo init -u https://github.com/sirnewbies/kernel_manifest.git -b main
-    repo sync
-    sudo apt install -y ccache
-    echo "Done"
-}
-
 WORK_DIR=$(pwd)
 ANYKERNEL="${WORK_DIR}/anykernel"
 KERNEL_DIR="topaz"
@@ -75,7 +67,14 @@ sendinfo() {
 *Last Commit*: [${COMMIT_HASH}](${REPO}/commit/${COMMIT_HASH})
 *Compiler*: \`${KBUILD_COMPILER_STRING}\`
 *Build Status*: \`${STATUS}\`"
-    sticker
+}
+
+sync() {
+    echo "Syncing manifest"
+    repo init -u https://github.com/sirnewbies/kernel_manifest.git -b main
+    repo sync
+    sudo apt install -y ccache
+    echo "Done"
 }
 
 # Push kernel to channel

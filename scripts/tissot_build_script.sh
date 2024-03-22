@@ -7,8 +7,8 @@ cd kernel
 clang() {
     echo "Cloning clang"
     if [ ! -d "clang" ]; then
-        git clone https://github.com/kdrag0n/proton-clang clang --depth=1
-        KBUILD_COMPILER_STRING="Proton clang 13.0 x sirnewbies"
+        git clone https://gitlab.com/LeCmnGend/proton-clang -b clang-15 --depth=1 clang
+        KBUILD_COMPILER_STRING="Proton clang 15.0 x sirnewbies"
         PATH="${PWD}/clang/bin:${PATH}"
     fi
     sudo apt install -y ccache
@@ -60,20 +60,6 @@ tgs() {
         -F "caption=$2 | *MD5*: \`$MD5\`"
 }
 
-# Sticker
-sticker() {
-    curl -s -X POST https://api.telegram.org/bot"${token}"/sendSticker \
-        -d sticker="CAACAgUAAxkBAAEKwfdlVQiHDyeU33wu71hiEWMeemBHhAACTAUAAgjXqFdZ0rpx15brLTME" \
-        -d chat_id="${chat_id}"
-}
-
-# Error Sticker
-error_sticker() {
-    curl -s -X POST https://api.telegram.org/bot"${token}"/sendSticker \
-        -d sticker="CAACAgQAAxkBAAEKxCplVkvohpIHdto0Sq0FNnsjpiFN6AACQAoAAmfRmFBaWxhVsThPHDME" \
-        -d chat_id="${chat_id}"
-}
-
 # Send Build Info
 sendinfo() {
     tg "
@@ -85,7 +71,6 @@ sendinfo() {
 *Last Commit*: [${COMMIT_HASH}](${REPO}/commit/${COMMIT_HASH})
 *Compiler*: \`${KBUILD_COMPILER_STRING}\`
 *Build Status*: \`${STATUS}\`"
-    sticker
 }
 
 # Push kernel to channel
@@ -113,6 +98,8 @@ compile() {
     if [ -d "out" ]; then
         rm -rf out && mkdir -p out
     fi
+
+    ./update_ksu.sh
 
     make O=out ARCH="${ARCH}" "${DEFCONFIG}"
     make -j"${PROCS}" O=out \

@@ -108,7 +108,6 @@ compile() {
         CC="clang" \
         LLVM=1 \
         LLVM_IAS=1 \
-        LD=ld.lld \
         CROSS_COMPILE=aarch64-linux-gnu- \
         CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 

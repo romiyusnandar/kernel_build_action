@@ -33,7 +33,7 @@ DEVICE="Redmi Note 10 Pro"
 export DEVICE
 CODENAME="sweet"
 export CODENAME
-DEFCONFIG="sweet_user_defconfig"
+DEFCONFIG="vendor/sweet_user_defconfig"
 export DEFCONFIG
 COMMIT_HASH=$(git rev-parse --short HEAD)
 export COMMIT_HASH
@@ -104,12 +104,18 @@ compile() {
 
     make O=out ARCH="${ARCH}" "${DEFCONFIG}"
     make -j"${PROCS}" O=out \
-        ARCH=$ARCH \
-        CC="clang" \
+        ARCH=arm64 \
         LLVM=1 \
         LLVM_IAS=1 \
+        AR=llvm-ar \
+        NM=llvm-nm \
+        LD=ld.lld \
+        OBJCOPY=llvm-objcopy \
+        OBJDUMP=llvm-objdump \
+        STRIP=llvm-strip \
+        CC=clang \
         CROSS_COMPILE=aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+        CROSS_COMPILE_ARM32=arm-linux-gnueabi
 
     if ! [ -a "$IMAGE" ]; then
         finderr
@@ -119,6 +125,7 @@ compile() {
     git clone --depth=1 -b master https://github.com/RooGhz720/Anykernel3.git AnyKernel
     cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
     cp out/arch/arm64/boot/dtbo.img AnyKernel
+    cp out/arch/arm64/boot/dtb.img AnyKernel
 }
 # Zipping
 zipping() {

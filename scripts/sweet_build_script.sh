@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 # Dependencies
+rm -rf kernel
 git clone $REPO -b $BRANCH kernel 
 cd kernel
 
 clang() {
+    rm -rf clang
     echo "Cloning clang"
     if [ ! -d "clang" ]; then
         git clone -q https://gitlab.com/PixelOS-Devices/playgroundtc.git --depth=1 -b 17 clang

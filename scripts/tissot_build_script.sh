@@ -2,7 +2,7 @@
 
 # Dependencies
 rm -rf kernel
-git clone $REPO -b $BRANCH kernel 
+git clone $REPO -b $BRANCH kernel
 cd kernel
 
 clang() {
@@ -10,7 +10,7 @@ clang() {
     echo "Cloning clang"
     if [ ! -d "clang" ]; then
         git clone https://gitlab.com/LeCmnGend/proton-clang -b clang-15 --depth=1 clang
-        KBUILD_COMPILER_STRING="Proton clang 15.0 x sirnewbies"
+        KBUILD_COMPILER_STRING="Proton clang 15.0"
         PATH="${PWD}/clang/bin:${PATH}"
     fi
     sudo apt install -y ccache
@@ -26,9 +26,9 @@ export CACHE
 export KBUILD_COMPILER_STRING
 ARCH=arm64
 export ARCH
-KBUILD_BUILD_HOST="sirnewbies"
+KBUILD_BUILD_HOST="romi.yusna"
 export KBUILD_BUILD_HOST
-KBUILD_BUILD_USER="noob-server"
+KBUILD_BUILD_USER="orion-server"
 export KBUILD_BUILD_USER
 DEVICE="Xiaomi Mi A1"
 export DEVICE
@@ -101,7 +101,7 @@ compile() {
         rm -rf out && mkdir -p out
     fi
 
-    ./update_ksu.sh
+    # ./update_ksu.sh
 
     make O=out ARCH="${ARCH}" "${DEFCONFIG}"
     make -j"${PROCS}" O=out \
@@ -122,7 +122,7 @@ compile() {
 # Zipping
 zipping() {
     cd AnyKernel || exit 1
-    zip -r9 Another-Kernel-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
+    zip -r9 noob-kernel-testing-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
     cd ..
 }
 

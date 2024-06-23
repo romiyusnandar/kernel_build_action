@@ -114,7 +114,7 @@ compile() {
         exit 1
     fi
 
-    git clone --depth=1 https://github.com/sirnewbies/Anykernel3.git AnyKernel -b tissot
+    git clone --depth=1 https://github.com/romiyusnandar/Anykernel3.git AnyKernel -b tissot-14
     cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
 }
 # Zipping

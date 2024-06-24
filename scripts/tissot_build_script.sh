@@ -34,7 +34,7 @@ DEVICE="Xiaomi Mi A1"
 export DEVICE
 CODENAME="tissot"
 export CODENAME
-DEFCONFIG="vendor/msm8953-romi_defconfig:vendor/xiaomi/tissot.config"
+# DEFCONFIG=""
 export DEFCONFIG
 COMMIT_HASH=$(git rev-parse --short HEAD)
 export COMMIT_HASH
@@ -101,7 +101,7 @@ compile() {
         rm -rf out && mkdir -p out
     fi
 
-    make O=out ARCH="${ARCH}" "${DEFCONFIG}"
+    make O=out ARCH="${ARCH}" vendor/msm8953-romi_defconfig vendor/xiaomi/tissot.config
     make -j"${PROCS}" O=out \
         ARCH=$ARCH \
         CC="clang" \

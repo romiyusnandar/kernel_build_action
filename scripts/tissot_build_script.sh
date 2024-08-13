@@ -35,7 +35,10 @@ export DEVICE
 CODENAME="tissot"
 export CODENAME
 # DEFCONFIG=""
-export DEFCONFIG
+DEFCONFIG_COMMON="vendor/msm8953-romi_defconfig"
+DEFCONFIG_DEVICE="vendor/xiaomi/tissot.config"
+export DEFCONFIG_COMMON
+export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)
 export COMMIT_HASH
 PROCS=$(nproc --all)
@@ -88,9 +91,7 @@ finderr() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=markdown" \
-        -d sticker="CAACAgIAAxkBAAED3JViAplqY4fom_JEexpe31DcwVZ4ogAC1BAAAiHvsEs7bOVKQsl_OiME" \
         -d text="Build throw an error(s)"
-    error_sticker
     exit 1
 }
 
@@ -101,7 +102,9 @@ compile() {
         rm -rf out && mkdir -p out
     fi
 
-    make O=out ARCH="${ARCH}" vendor/msm8953-romi_defconfig vendor/xiaomi/tissot.config
+    make O=out ARCH="${ARCH}"
+    make "$DEFCONFIG_COMMON" O=out
+    make "$DEFCONFIG_DEVICE" O=out
     make -j"${PROCS}" O=out \
         ARCH=$ARCH \
         CC="clang" \

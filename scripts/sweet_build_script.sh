@@ -2,15 +2,15 @@
 
 # Dependencies
 rm -rf kernel
-git clone $REPO -b $BRANCH kernel 
+git clone $REPO -b $BRANCH kernel
 cd kernel
 
 clang() {
     rm -rf clang
     echo "Cloning clang"
     if [ ! -d "clang" ]; then
-        git clone -q https://gitlab.com/PixelOS-Devices/playgroundtc.git --depth=1 -b 17 clang
-        KBUILD_COMPILER_STRING="Cosmic clang 17.0"
+        git clone https://gitlab.com/LeCmnGend/proton-clang -b clang-15 --depth=1 clang
+        KBUILD_COMPILER_STRING="Proton clang 15.0"
         PATH="${PWD}/clang/bin:${PATH}"
     fi
     sudo apt install -y ccache
@@ -18,7 +18,6 @@ clang() {
 }
 
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
-IMAGE2=$(pwd)/out/arch/arm64/boot/dtbo.img
 DATE=$(date +"%Y%m%d-%H%M")
 START=$(date +"%s")
 KERNEL_DIR=$(pwd)
@@ -27,21 +26,24 @@ export CACHE
 export KBUILD_COMPILER_STRING
 ARCH=arm64
 export ARCH
-KBUILD_BUILD_HOST="sirnewbies"
+KBUILD_BUILD_HOST="romi.yusna"
 export KBUILD_BUILD_HOST
-KBUILD_BUILD_USER="noob-server"
+KBUILD_BUILD_USER="orion-server"
 export KBUILD_BUILD_USER
 DEVICE="Redmi Note 10 Pro"
 export DEVICE
 CODENAME="sweet"
 export CODENAME
-DEFCONFIG="vendor/sweet_user_defconfig"
-export DEFCONFIG
+# DEFCONFIG=""
+DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
+DEFCONFIG_DEVICE="vendor/sweet.config"
+export DEFCONFIG_COMMON
+export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)
 export COMMIT_HASH
 PROCS=$(nproc --all)
 export PROCS
-STATUS=TEST
+STATUS=STABLE
 export STATUS
 source "${HOME}"/.bashrc && source "${HOME}"/.profile
 if [ $CACHE = 1 ]; then
@@ -89,9 +91,7 @@ finderr() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=markdown" \
-        -d sticker="CAACAgIAAxkBAAED3JViAplqY4fom_JEexpe31DcwVZ4ogAC1BAAAiHvsEs7bOVKQsl_OiME" \
         -d text="Build throw an error(s)"
-    error_sticker
     exit 1
 }
 
@@ -102,37 +102,30 @@ compile() {
         rm -rf out && mkdir -p out
     fi
 
-    ./update_ksu.sh
-
-    make O=out ARCH="${ARCH}" "${DEFCONFIG}"
+    make O=out ARCH="${ARCH}"
+    make "$DEFCONFIG_COMMON" O=out
+    make "$DEFCONFIG_DEVICE" O=out
     make -j"${PROCS}" O=out \
-        ARCH=arm64 \
+        ARCH=$ARCH \
+        CC="clang" \
         LLVM=1 \
-        LLVM_IAS=1 \
-        AR=llvm-ar \
-        NM=llvm-nm \
-        LD=ld.lld \
-        OBJCOPY=llvm-objcopy \
-        OBJDUMP=llvm-objdump \
-        STRIP=llvm-strip \
-        CC=clang \
         CROSS_COMPILE=aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32=arm-linux-gnueabi
+        CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
     if ! [ -a "$IMAGE" ]; then
         finderr
         exit 1
     fi
 
-    git clone --depth=1 -b master https://github.com/RooGhz720/Anykernel3.git AnyKernel
-    cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
-    cp out/arch/arm64/boot/dtbo.img AnyKernel
+    https://github.com/itsshashanksp/AnyKernel3.git AnyKernel
+    cp out/arch/arm64/boot/Image.gz AnyKernel
     cp out/arch/arm64/boot/dtb.img AnyKernel
+    cp out/arch/arm64/boot/dtbo.img AnyKernel
 }
 # Zipping
 zipping() {
     cd AnyKernel || exit 1
-    zip -r9 Test-Build-Kernel-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
+    zip -r9 evergreen-kernel-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
     cd ..
 }
 

@@ -42,7 +42,7 @@ CODENAME="sweet"
 export CODENAME
 # DEFCONFIG=""
 #DEFCONFIG_COMMON="sweet_defconfig"
-DEFCONFIG_DEVICE="sweet_defconfig"
+DEFCONFIG_DEVICE="sweet_user_defconfig"
 # export DEFCONFIG_COMMON
 export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)
@@ -136,7 +136,7 @@ compile() {
         exit 1
     fi
 
-    git clone https://github.com/RooGhz720/Anykernel3 AnyKernel
+    git clone https://github.com/RooGhz720/Anykernel3 -b master AnyKernel
     cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
     cp out/arch/arm64/boot/dtb.img AnyKernel
     cp out/arch/arm64/boot/dtbo.img AnyKernel

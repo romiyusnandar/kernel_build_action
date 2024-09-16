@@ -107,16 +107,16 @@ compile() {
     if [ -d "out" ]; then
         rm -rf out && mkdir -p out
     fi
-    git remote add addon https://github.com/RooGhz720/RooGhz720.git
-    git fetch addon
-    sleep 5
-    git cherry-pick 3b7da833ca83852ad3c60972a9ef6cdefcba8795 ##miui pick
-    git cherry-pick --skip
-    echo "berhasil switch ke MIUI"
-    sleep 2
+    # git remote add addon https://github.com/RooGhz720/RooGhz720.git
+    # git fetch addon
+    # sleep 5
+    # git cherry-pick 3b7da833ca83852ad3c60972a9ef6cdefcba8795 ##miui pick
+    # git cherry-pick --skip
+    # echo "berhasil switch ke MIUI"
+    # sleep 2
 
     make O=out ARCH="${ARCH}"
-    make "$DEFCONFIG_COMMON" O=out
+    # make "$DEFCONFIG_COMMON" O=out
     make "$DEFCONFIG_DEVICE" O=out
     make -j$(nproc --all) O=out \
                               ARCH=arm64 \
@@ -136,7 +136,7 @@ compile() {
         exit 1
     fi
 
-    git clone https://github.com/RooGhz720/Anykernel3 -b master AnyKernel
+    git clone https://github.com/romiyusnandar/Anykernel3 -b sweet AnyKernel
     cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
     cp out/arch/arm64/boot/dtb.img AnyKernel
     cp out/arch/arm64/boot/dtbo.img AnyKernel

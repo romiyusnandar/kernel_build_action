@@ -42,7 +42,7 @@ CODENAME="sweet"
 export CODENAME
 # DEFCONFIG=""
 #DEFCONFIG_COMMON="sweet_defconfig"
-DEFCONFIG_DEVICE="sweet_user_defconfig"
+DEFCONFIG_DEVICE="vendor/sweet_user_defconfig"
 # export DEFCONFIG_COMMON
 export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)

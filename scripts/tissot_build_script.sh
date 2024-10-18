@@ -125,7 +125,7 @@ compile() {
 # Zipping
 zipping() {
     cd AnyKernel || exit 1
-    zip -r9 noob-kernel-testing-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
+    zip -r9 kernel-testing-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
     cd ..
 }
 

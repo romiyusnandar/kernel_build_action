@@ -35,9 +35,8 @@ export DEVICE
 CODENAME="tissot"
 export CODENAME
 # DEFCONFIG=""
-DEFCONFIG_COMMON="msm8953-perf_defconfig"
-DEFCONFIG_COMMON2="xiaomi/xiaomi.config"
-DEFCONFIG_DEVICE="xiaomi/tissot.config"
+DEFCONFIG_COMMON="vendor/msm8953-romi_defconfig"
+DEFCONFIG_DEVICE="vendor/xiaomi/tissot.config"
 export DEFCONFIG_COMMON
 export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)
@@ -105,7 +104,6 @@ compile() {
 
     make O=out ARCH="${ARCH}"
     make "$DEFCONFIG_COMMON" O=out
-    make "$DEFCONFIG_COMMON2" O=out
     make "$DEFCONFIG_DEVICE" O=out
     make -j"${PROCS}" O=out \
         ARCH=$ARCH \
@@ -119,7 +117,7 @@ compile() {
         exit 1
     fi
 
-    git clone --depth=1 https://github.com/romiyusnandar/Anykernel3.git AnyKernel -b tissot-14
+    git clone --depth=1 https://github.com/romiyusnandar/Anykernel3.git AnyKernel -b tissot
     cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
 }
 # Zipping

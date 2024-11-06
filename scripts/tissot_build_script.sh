@@ -35,9 +35,9 @@ export DEVICE
 CODENAME="tissot"
 export CODENAME
 # DEFCONFIG=""
-DEFCONFIG_COMMON="vendor/msm8953-romi_defconfig"
-DEFCONFIG_DEVICE="vendor/xiaomi/tissot.config"
-export DEFCONFIG_COMMON
+#DEFCONFIG_COMMON="vendor/msm8953-romi_defconfig"
+DEFCONFIG_DEVICE="vendor/msm8953-perf_defconfig"
+#export DEFCONFIG_COMMON
 export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)
 export COMMIT_HASH

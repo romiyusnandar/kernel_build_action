@@ -9,6 +9,8 @@ clang() {
     rm -rf clang
     echo "Cloning clang"
     if [ ! -d "clang" ]; then
+    	mkdir clang
+     	cd clang
         wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r522817.tar.gz
 	tar -xvf *
         KBUILD_COMPILER_STRING="clangggg"

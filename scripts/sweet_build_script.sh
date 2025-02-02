@@ -11,9 +11,9 @@ clang() {
     if [ ! -d "clang" ]; then
     	mkdir clang
      	cd clang
-        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r547379.tar.gz
+        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r530567.tar.gz
 	tar -xvf *
-        KBUILD_COMPILER_STRING="clangggg"
+        KBUILD_COMPILER_STRING="Another Clang"
         PATH="${PWD}/clang/bin:${PATH}"
     fi
     sudo apt install -y ccache
@@ -184,14 +184,14 @@ compile() {
 # Zipping
 zipping() {
     cd AnyKernel || exit 1
-    zip -r9 kernel-testing-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
+    zip -r9 Evergreen-1.0-"${BRANCH}"-"${CODENAME}"-"${DATE}".zip ./*
     cd ..
 }
 
 clang
 sendinfo
 compile
-# zipping
+zipping
 END=$(date +"%s")
 DIFF=$((END - START))
 push

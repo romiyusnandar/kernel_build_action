@@ -11,7 +11,7 @@ clang() {
     if [ ! -d "clang" ]; then
     	mkdir clang
      	cd clang
-        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r522817.tar.gz
+        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r547379.tar.gz
 	tar -xvf *
         KBUILD_COMPILER_STRING="clangggg"
         PATH="${PWD}/clang/bin:${PATH}"
@@ -20,8 +20,8 @@ clang() {
     echo "Done"
 }
 
-AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
-AnyKernelbranch="master"
+AnyKernel="https://github.com/romiyusnandar/Anykernel3.git"
+AnyKernelbranch="sweet"
 
 export IMG="$PWD"/out/arch/arm64/boot/Image.gz
 export dtbo="$PWD"/out/arch/arm64/boot/dtbo.img
@@ -44,9 +44,9 @@ export DEVICE
 CODENAME="sweet"
 export CODENAME
 # DEFCONFIG=""
-DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/sweet.config"
-export DEFCONFIG_COMMON
+# DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
+DEFCONFIG_DEVICE="sweet_defconfig"
+# export DEFCONFIG_COMMON
 export DEFCONFIG_DEVICE
 COMMIT_HASH=$(git rev-parse --short HEAD)
 export COMMIT_HASH
@@ -77,7 +77,7 @@ tgs() {
 # Send Build Info
 sendinfo() {
     tg "
-• sirCompiler Action •
+• Romiz Action •
 *Building on*: \`Github actions\`
 *Date*: \`${DATE}\`
 *Device*: \`${DEVICE} (${CODENAME})\`

@@ -129,22 +129,14 @@ compile() {
     fi
 
     make O=out ARCH="${ARCH}"
-    make "$DEFCONFIG_COMMON" O=out
     make "$DEFCONFIG_DEVICE" O=out
-    make -j$(nproc --all) O=out \
-                              ARCH=arm64 \
-                              LLVM=1 \
-                              LLVM_IAS=1 \
-                              AR=llvm-ar \
-                              NM=llvm-nm \
-                              LD=ld.lld \
-                              OBJCOPY=llvm-objcopy \
-                              OBJDUMP=llvm-objdump \
-                              STRIP=llvm-strip \
-                              CC=clang \
-                              CLANG_TRIPLE=aarch64-linux-gnu- \
-                              CROSS_COMPILE=aarch64-linux-android- \
-                              CROSS_COMPILE_ARM32=arm-linux-androideabi-  2>&1 | tee error.log
+    make -j$(nproc) \
+    		O=out \
+    		ARCH=arm64 \
+    		LLVM=1 \
+    		LLVM_IAS=1 \
+    		CROSS_COMPILE=aarch64-linux-gnu- \
+    		CROSS_COMPILE_ARM32=arm-linux-gnueabi- 2>&1 | tee error.log
 
     if [ -f "$IMG" ]; then
                 echo -e "$green << Build completed in $(($Diff / 60)) minutes and $(($Diff % 60)) seconds >> \n $white"
